@@ -8,14 +8,27 @@ app.use(morgan('combined'));
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
-var articleOne=
-{
+var article={
+articleOne:{
     title: 'Article one | Aishwarya Agrawal',
     heading : 'Article-one',
     date : 'November 5,2016',
     content:`
     <p> This is my first Article.This is my first Article.This is my first Article.This is my first Article.This is my first            Article.This is my first Article.This is my first Article.This is my first Article.This is my first Article.This is my first        Article.This is my first Article.<p>`
     
+},
+articleTwo:{title: 'Article two | Aishwarya Agrawal',
+    heading : 'Article-two',
+    date : 'November 5,2016',
+    content:`
+    <p> This is my second Article.This is my first Article.<p>`
+    },
+articleThree:{title: 'Article three | Aishwarya Agrawal',
+    heading : 'Article-three',
+    date : 'November 5,2016',
+    content:`
+    <p> This is my third Article.This is my first Article.<p>`
+    }
 };
 function createTemplate(data){
     var title=data.title;
