@@ -16,7 +16,33 @@ var content=
     content:`
     <p> This is my first Article.This is my first Article.This is my first Article.This is my first Article.This is my first            Article.This is my first Article.This is my first Article.This is my first Article.This is my first Article.This is my first        Article.This is my first Article.<p>`
     
-}
+};
+var htmlTemplate=`<html>
+<head>
+<title>
+${title}
+</title>
+<meta name="viewport" content="width-device-width,initial-scale-1" />
+</head>
+<body>
+   <div class="container">
+      <div>
+      <a href="/">Home</a>
+      </div>
+      <hr/>
+      <h3>
+      ${heading}
+      </h3>
+      <div>
+      ${date}
+      </div>
+      <div>
+      ${content}
+      </div>
+      </div>
+</body>
+</html>
+`;
 
 
 
