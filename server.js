@@ -8,6 +8,20 @@ app.use(morgan('combined'));
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
+var content=
+{
+    title: 'Article one | Aishwarya Agrawal',
+    heading : 'Article-one',
+    date : 'November 5,2016',
+    content:`
+    <p> This is my first Article.This is my first Article.This is my first Article.This is my first Article.This is my first            Article.This is my first Article.This is my first Article.This is my first Article.This is my first Article.This is my first        Article.This is my first Article.<p>`
+    
+}
+
+
+
+
+
 
 app.get('/ui/style.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'style.css'));
