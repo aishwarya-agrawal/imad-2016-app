@@ -8,7 +8,7 @@ app.use(morgan('combined'));
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
-var content=
+var data=
 {
     title: 'Article one | Aishwarya Agrawal',
     heading : 'Article-one',
@@ -17,6 +17,11 @@ var content=
     <p> This is my first Article.This is my first Article.This is my first Article.This is my first Article.This is my first            Article.This is my first Article.This is my first Article.This is my first Article.This is my first Article.This is my first        Article.This is my first Article.<p>`
     
 };
+function createTemplate(data){
+    var title=data.title;
+    var heading=data.heading;
+    var date=data.date;
+    var content=data.content;
 var htmlTemplate=`<html>
 <head>
 <title>
@@ -43,7 +48,7 @@ ${title}
 </body>
 </html>
 `;
-
+};
 
 
 
