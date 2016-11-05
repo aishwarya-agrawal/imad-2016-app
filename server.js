@@ -28,7 +28,7 @@ var htmlTemplate=`<html>
 ${title}
 </title>
 <meta name="viewport" content="width-device-width,initial-scale-1" />
-<link rel="ui/style/css" type="text/css">
+<link rel="stylesheet" type="text/css" href="ui/style/css">
 </head>
 <body>
    <div class="container">
