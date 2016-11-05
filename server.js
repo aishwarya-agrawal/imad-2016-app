@@ -8,7 +8,7 @@ app.use(morgan('combined'));
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
-var data=
+var articleOne=
 {
     title: 'Article one | Aishwarya Agrawal',
     heading : 'Article-one',
@@ -48,7 +48,8 @@ ${title}
 </body>
 </html>
 `;
-};
+return htmlTemplate;
+}
 
 
 
@@ -59,7 +60,7 @@ app.get('/ui/style.css', function (req, res) {
 });
 app.get('/article-one',function(req,res)
 {
-   res.send("Article one is requested and is served here!") 
+   res.send(createTemplate(articleOne)); 
 });
 app.get('/article-two',function(req,res)
 {
