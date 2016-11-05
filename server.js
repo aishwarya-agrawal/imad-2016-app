@@ -9,7 +9,7 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 var article={
-articleOne:{
+'article-one':{
     title: 'Article one | Aishwarya Agrawal',
     heading : 'Article-one',
     date : 'November 5,2016',
@@ -17,13 +17,13 @@ articleOne:{
     <p> This is my first Article.This is my first Article.This is my first Article.This is my first Article.This is my first            Article.This is my first Article.This is my first Article.This is my first Article.This is my first Article.This is my first        Article.This is my first Article.<p>`
     
 },
-articleTwo:{title: 'Article two | Aishwarya Agrawal',
+'article-two':{title: 'Article two | Aishwarya Agrawal',
     heading : 'Article-two',
     date : 'November 5,2016',
     content:`
     <p> This is my second Article.This is my first Article.<p>`
     },
-articleThree:{title: 'Article three | Aishwarya Agrawal',
+'article-three':{title: 'Article three | Aishwarya Agrawal',
     heading : 'Article-three',
     date : 'November 5,2016',
     content:`
@@ -69,7 +69,7 @@ app.get('/ui/style.css', function (req, res) {
 });
 app.get('/:articleName',function(req,res)
 {
-   res.send(createTemplate(articleOne)); 
+   res.send(createTemplate(articles[articleName])); 
 });
 app.get('/article-two',function(req,res)
 {
