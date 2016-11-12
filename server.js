@@ -57,27 +57,14 @@ ${title}
 return htmlTemplate;
 }
 var pool = new Pool(config);
-app.get('/article-db',function(req,res){
-  pool.query('SELECT * FROM article',function(err,result){
-      if(err)
-      {
-          res.status(550).send(err.toString());
-      }
-      else
-      {
-          res.send(JSON.stringify(result.rows));
-      }
-  }) 
-});
 app.get('/articles/:articleName',function(req,res)
 {
-    pool.query("SELECT * FROM article WHERE title='"+req.params.articleName+"'",function(err,result){
+    pool.query("SELECT * FROM article WHERE title=$1"+[req.params.articleName],function(err,result){
         if(err)
-        {
-            res.status(550).send(err.toString());
+        {            res.status(500).send(err.toString());
         }else
         {
-            if(result.row.length()===0)
+            if(result.row.length===0)
             {
                 res.status(404).send('Article not found');
             }
@@ -88,7 +75,6 @@ app.get('/articles/:articleName',function(req,res)
             }
         }
     });
-   res.send(createTemplate(article[articleName])); 
 });
 
 app.get('/ui/write.html',function(req,res)
