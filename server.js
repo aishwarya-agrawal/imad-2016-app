@@ -2,6 +2,9 @@ var express = require('express');
 var morgan = require('morgan');
 var path = require('path');
 var pool=require('pg').Pool;
+var crypto =require('crypto');
+var bodyParser=require('body-parser');
+var session=require('express-session');
 var config={
     user:'aishwarya-agrawal',
     database:'aishwarya-agrawal',
@@ -20,7 +23,82 @@ app.get('/', function (req, res) {
 app.get('/ui/registration.html',function(req,res)
 {
     res.sendFile(path.join(__dirname,'ui','registration.html'));
-})
+});
+function hash(input,salt)
+{
+	var hashed=crypto.pbkdf2Sync(input,salt,10000,512,'sha512');
+	return['pbkdf2S','10000',salt,hashed.toString('hex')].join('$');
+}
+app.get('/hash/:input',function(req,res){
+	var hashedString=hash(req.params.input,'this is a normal string');
+	res.send(hashedString);
+});
+app.post('create-user',function(req,res){
+	var name=req.body.username;
+	var password=req.body.password;
+	var emailid=req.body.emailId;
+	var contact=req.body.contactNo;
+	var salt=crypto.randomBytes(128).toString('hex');
+	var dbString=hash(password,salt);
+	pool.query('INSERT INTO "user" (name,password,emailid,contact) values ($1,$2,$3,$4)',[name,password,dbString,emailid,contact],function(err,result){
+		if(err)
+		{
+			res.status(500).send(err.toString());
+		}
+		else
+		{
+			res.send('user successfully created'+emailid);		}
+	});
+});
+app.post('/login',function(req,res)
+{
+	var loginid=req.body.username;
+	var password=req.body.password;
+	pool.query('SELECT * FROM "user" where emailid=$1',[username],function(err,result)
+	{
+		if(err)
+		{
+			res.status(500).send(err.toString());
+		}
+		else
+		{
+			if(result.rows.length===0)
+			{
+				res.send(403).send("username/password incorrect");
+			}
+			else
+			{
+				var dbString =result.rows[0].password;
+				var salt=dbString.split('$')[2];
+				var hashedpassword=hash(password,salt);
+				if(hashedpassword===dbString)
+				{
+					req.session.auth={userid : result.rows[0].id};
+					res.send("credentials are correct!");
+				}
+				else
+				{
+					res.send(403).send("username/password incorrect");
+				}
+			}
+		}
+	});
+});
+app.get('/check=login',function(req,res)
+{
+	if(req.session&&req.session.auth&&req.session.auth.userId){
+		res.send("you are logged in as "+req.session.auth.userId.toString());
+	}
+	else
+	{
+		res.send("you are not logged in ");
+	}
+});
+app.get('/logout',function(req,res)
+{
+	delete req.session.auth;
+	res.send("Logged out");
+});
 
 function createTemplate(data){
     var title=data.title;
