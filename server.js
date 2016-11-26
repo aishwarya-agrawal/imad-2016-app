@@ -40,7 +40,7 @@ app.get('/ui/clipboard-1772235_960_720.png', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'clipboard-1772235_960_720.png'));
 });
 var pool=new Pool('config');
-app.get('ui/test-db',function(req,res){
+app.get('/test-db',function(req,res){
   pool.query('SELECT * FROM test',function(err,result){
       if(err)
       {
