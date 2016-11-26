@@ -2,6 +2,7 @@ var express = require('express');
 var morgan = require('morgan');
 var path = require('path');
 var pg= require('pg');
+var pool=require('pg').Pool;
 var config={
     user:'aishwarya-agrawal',
     database:'aishwarya-agrawal',
@@ -9,9 +10,20 @@ var config={
     port:'5432',
     password:process.env.DB_PASSWORD
 };
-var pool = new pg.Pool(config);
 
 
+var pool=new Pool('config');
+app.get('/article-db',function(req,res){
+  pool.query('SELECT * FROM article',function(err,result){
+      if(err)
+      {
+          res.status(550).send(err.toString());
+      }
+      else
+      {
+          res.send(JSON.stringify(result.rows));
+      }
+  }) 
 var app = express();
 app.use(morgan('combined'));
 
@@ -98,18 +110,7 @@ app.get('/articles/:articleName',function(req,res)
     });
    res.send(createTemplate(article[articleName])); 
 });
-var pool = new Pool(config);
-app.get('/article-db',function(req,res){
-  pool.query('SELECT * FROM article',function(err,result){
-      if(err)
-      {
-          res.status(550).send(err.toString());
-      }
-      else
-      {
-          res.send(JSON.stringify(result.rows));
-      }
-  }) 
+
 })
 
 
