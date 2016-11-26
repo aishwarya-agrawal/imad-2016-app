@@ -13,6 +13,7 @@ var config={
 };
 
 var pool=new Pool('config');
+app.use(morgan('combined'));
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
@@ -50,11 +51,6 @@ app.get('/test-db',function(req,res){
           res.send(JSON.stringify(result.rows));
       }
   }) ;
-var app = express();
-app.use(morgan('combined'));
-
-
-
 function createTemplate(data){
     var title=data.title;
     var heading=data.heading;
