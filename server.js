@@ -49,7 +49,7 @@ app.get('/test-db',function(req,res){
       {
           res.send(JSON.stringify(result.rows));
       }
-  }) 
+  }) ;
 var app = express();
 app.use(morgan('combined'));
 
@@ -114,8 +114,7 @@ app.get('/articles/:articleName',function(req,res)
    res.send(createTemplate(article[articleName])); 
 });
 
-})
-
+});
 
 
 var port = 8080; // Use 8080 for local development because you might already have apache running on 80
