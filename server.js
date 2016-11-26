@@ -10,11 +10,9 @@ var config={
     port:'5432',
     password:process.env.DB_PASSWORD
 };
-
-
 var pool=new Pool('config');
-app.get('/article-db',function(req,res){
-  pool.query('SELECT * FROM article',function(err,result){
+app.get('/test-db',function(req,res){
+  pool.query('SELECT * FROM test',function(err,result){
       if(err)
       {
           res.status(550).send(err.toString());
